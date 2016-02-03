@@ -1,3 +1,11 @@
+// Time-stamp: <2016-02-03 11:02:23 dmendyke>
+// Author: DFM
+
+
+//
+// sorted.cc:  Sample code to show how to recursively take two sorted
+// lists and create a third sorted list
+//
 
 
 // Required header files
@@ -42,7 +50,7 @@ void proj::dump( const char* name, const proj::list& list ) {
 };  // end dump
 
 
-// Reqursively merge two sorted lists into a third
+// Recursively merge two sorted lists into a third
 //-----------------------------------------------------------------------------
 void proj::merge( const proj::list& one,
                   citerator ione,
@@ -55,15 +63,8 @@ void proj::merge( const proj::list& one,
 
   int value = 0x0;
 
-  if ( ione == one.end() ) {
-    value = *itwo++;
-  } else if ( itwo == two.end() ) {
-    value = *ione++;
-  } else if ( *ione <= *itwo ) {
-    value = *ione++;
-  } else {
-    value = *itwo++;
-  };
+  if ( ( itwo == two.end() ) || ( *ione <= *itwo ) ) value = *ione++;
+  else value = *itwo++;
 
   proj::merge( one, ione, two, itwo, three );
   three.push_front( value );
@@ -80,8 +81,8 @@ using namespace std;  // standard library
 //-----------------------------------------------------------------------------
 int main( int, char*[] ) {
 
-  proj::list one( { 1, 3, 5, 7 } );
-  proj::list two( { 2, 4, 6, 8 } );
+  proj::list one( { 1, 3, 5, 7, 9, 11, 13 } );
+  proj::list two( { 1, 2, 4, 6, 8 } );
   proj::list three;
 
   proj::dump( "One", one );
